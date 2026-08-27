@@ -6,8 +6,8 @@ const [html, app, manifest, serviceWorker, intro, introScript] = await Promise.a
   readFile(new URL('../app.js', import.meta.url), 'utf8'),
   readFile(new URL('../manifest.json', import.meta.url), 'utf8'),
   readFile(new URL('../sw.js', import.meta.url), 'utf8'),
-  readFile(new URL('../docs/intro/index.html', import.meta.url), 'utf8'),
-  readFile(new URL('../docs/intro/script.js', import.meta.url), 'utf8')
+  readFile(new URL('../intro/index.html', import.meta.url), 'utf8'),
+  readFile(new URL('../intro/script.js', import.meta.url), 'utf8')
 ]);
 
 const ids = [...app.matchAll(/getElementById\(['"]([^'"]+)['"]\)/g)].map((match) => match[1]);
