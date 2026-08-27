@@ -7,6 +7,8 @@ InfinityScale is a local-first browser workbench for image upscaling, vector tra
 
 **Live demo:** https://github37525.github.io/infinityscale/
 
+**Project links:** [Roadmap](ROADMAP.md) · [Issues](https://github.com/Github37525/infinityscale/issues) · [Discussions](https://github.com/Github37525/infinityscale/discussions)
+
 ![InfinityScale workspace](docs/screenshot.png)
 
 ## Why this project exists
@@ -88,4 +90,3 @@ InfinityScale source code is released under the [MIT License](LICENSE). Third-pa
 InfinityScale 是一个本地优先的浏览器图像工作台，提供 SVG 矢量追踪、ESRGAN Thick 2×/4× 超分、Pica MKS2013 忠实重采样、局部对比和印刷尺寸规划。
 
 它不会把所选图片上传到应用服务器，但首次使用仍需从公共 CDN 获取运行库、模型权重和 WASM；AI 生成的细节也不应被称为“无损恢复”。
-

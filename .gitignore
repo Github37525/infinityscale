@@ -3,6 +3,8 @@ audit-screenshots/
 design-qa.md
 PROJECT_AUDIT_*.md
 OPENAI_OSS_APPLICATION_DRAFT.md
+WEEK1_LAUNCH_DRAFT.md
+ops-evidence/
 
 # Local launcher backup
 *.legacy-gbk.bat
@@ -17,4 +19,3 @@ Thumbs.db
 *.log
 .cache/
 node_modules/
-

@@ -1,0 +1,66 @@
+name: Real-world feedback
+description: Share a reproducible result or workflow observation.
+title: "[Feedback]: "
+labels: [feedback, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Do not upload private or copyrighted images. Use a public-domain, synthetic, or heavily redacted example.
+  - type: input
+    id: version
+    attributes:
+      label: InfinityScale version or commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, operating system, and device
+      placeholder: Chrome 140 on Windows 11 desktop
+    validations:
+      required: true
+  - type: dropdown
+    id: image_class
+    attributes:
+      label: Image type
+      options:
+        - Photo
+        - Line art or logo
+        - Text or signature
+        - Transparent graphic
+        - Illustration or gradient
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: algorithm
+    attributes:
+      label: Method used
+      options:
+        - VTracer SVG
+        - ESRGAN Thick 2x
+        - ESRGAN Thick 4x
+        - Pica MKS2013
+        - Upload / preview / export only
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What did you try and what happened?
+      description: Include source dimensions, scale, target DPI, and whether the result was exported.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What would have made this useful?
+    validations:
+      required: true
+  - type: checkboxes
+    id: sharing
+    attributes:
+      label: Sharing permission
+      options:
+        - label: I have permission to share any attached example and understand it may remain public.
+          required: true
