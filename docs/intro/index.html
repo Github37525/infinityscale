@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101522">
+    <meta name="description" content="InfinityScale：本地优先的浏览器图像放大、矢量追踪与印刷尺寸规划工作台。">
+    <title>InfinityScale · 本地优先的图像工作台</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="InfinityScale home">
+          <span class="brand-mark" aria-hidden="true">∞</span>
+          <span>InfinityScale</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../" data-i18n="nav.demo">打开 Demo</a>
+          <a href="https://github.com/Github37525/infinityscale" target="_blank" rel="noreferrer" data-i18n="nav.github">GitHub</a>
+          <div class="language-switch" role="group" aria-label="Language">
+            <button type="button" data-lang="zh">中文</button>
+            <button type="button" data-lang="en">EN</button>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero section-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="hero.eyebrow">LOCAL-FIRST IMAGE WORKBENCH</p>
+            <h1>
+              <span data-i18n="hero.titleLead">把像素放大，</span>
+              <span class="gradient-text" data-i18n="hero.titleAccent">把选择说清楚。</span>
+            </h1>
+            <p class="hero-summary" data-i18n="hero.summary">在浏览器里比较重采样、AI 超分与矢量追踪，先看局部，再决定导出。</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="../" data-i18n="hero.primaryCta">打开图像工作台 <span aria-hidden="true">↗</span></a>
+              <a class="button button-quiet" href="https://github.com/Github37525/infinityscale" target="_blank" rel="noreferrer" data-i18n="hero.secondaryCta">查看源码</a>
+            </div>
+            <div class="privacy-note">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span data-i18n="hero.privacy">原图不上传应用服务器 · 首次运行需加载 CDN 运行库</span>
+            </div>
+          </div>
+
+          <div class="hero-preview" aria-label="InfinityScale app preview">
+            <div class="window-bar">
+              <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window-title">infinityscale / workspace</span>
+              <span class="window-status">LOCAL</span>
+            </div>
+            <img src="../screenshot.png" alt="InfinityScale image processing workspace" data-i18n-attr="alt:hero.imageAlt">
+            <div class="preview-glow" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="signal-row" aria-label="Project highlights">
+          <div><strong>03</strong><span data-i18n="signals.paths">条处理路径</span></div>
+          <div><strong>PNG · SVG · PDF</strong><span data-i18n="signals.export">本地导出</span></div>
+          <div><strong>PWA</strong><span data-i18n="signals.install">可安装工作台</span></div>
+        </section>
+
+        <section class="section-block methods-section">
+          <div class="section-heading">
+            <p class="eyebrow" data-i18n="methods.eyebrow">CHOOSE WITH CONTEXT</p>
+            <h2><span data-i18n="methods.titleLead">不是一个按钮适合所有图像，</span> <span class="muted-heading" data-i18n="methods.titleAccent">而是一组透明取舍。</span></h2>
+            <p data-i18n="methods.summary">InfinityScale 根据内容特征给出起点建议，同时始终允许你手动覆盖，并展示真正执行的方法。</p>
+          </div>
+          <div class="method-grid">
+            <article class="method-card method-trace">
+              <div class="method-topline"><span>01</span><span data-i18n="methods.trace.label">VECTOR</span></div>
+              <h3 data-i18n="methods.trace.title">VTracer SVG</h3>
+              <p data-i18n="methods.trace.body">把 Logo、文字、签名和线稿转换成可检查的矢量路径。</p>
+              <span class="method-use" data-i18n="methods.trace.use">线条与透明边缘</span>
+            </article>
+            <article class="method-card method-ai">
+              <div class="method-topline"><span>02</span><span data-i18n="methods.ai.label">RECONSTRUCT</span></div>
+              <h3 data-i18n="methods.ai.title">ESRGAN Thick 2× / 4×</h3>
+              <p data-i18n="methods.ai.body">为照片重建细节；它是生成式超分，不承诺像素级恢复。</p>
+              <span class="method-use" data-i18n="methods.ai.use">照片与纹理</span>
+            </article>
+            <article class="method-card method-resample">
+              <div class="method-topline"><span>03</span><span data-i18n="methods.resample.label">RESAMPLE</span></div>
+              <h3 data-i18n="methods.resample.title">Pica MKS2013</h3>
+              <p data-i18n="methods.resample.body">用确定性的高质量重采样保留已经干净的插画、渐变与图形。</p>
+              <span class="method-use" data-i18n="methods.resample.use">忠实放大与印刷准备</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-block workflow-section">
+          <div class="section-heading compact-heading">
+            <p class="eyebrow" data-i18n="workflow.eyebrow">A CALM WORKFLOW</p>
+            <h2 data-i18n="workflow.title">上传、观察、导出。</h2>
+          </div>
+          <div class="workflow-grid">
+            <article class="workflow-step">
+              <span class="step-number">01</span>
+              <div><h3 data-i18n="workflow.upload.title">上传图片</h3><p data-i18n="workflow.upload.body">拖入文件、选择文件，或从剪贴板开始。内容分析只在本地发生。</p></div>
+            </article>
+            <article class="workflow-step">
+              <span class="step-number">02</span>
+              <div><h3 data-i18n="workflow.preview.title">看局部对比</h3><p data-i18n="workflow.preview.body">拖动取样框，比较原图和结果；需要时覆盖推荐的方法。</p></div>
+            </article>
+            <article class="workflow-step">
+              <span class="step-number">03</span>
+              <div><h3 data-i18n="workflow.export.title">规划并导出</h3><p data-i18n="workflow.export.body">查看预计尺寸、目标 DPI 和有效 DPI，再导出 PNG、SVG 或印刷 PDF。</p></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="trust-panel">
+          <div class="trust-copy">
+            <p class="eyebrow" data-i18n="trust.eyebrow">TECHNICAL HONESTY</p>
+            <h2 data-i18n="trust.title">好工具也要说清楚边界。</h2>
+            <p data-i18n="trust.body">AI 会重建细节，SVG 是矢量近似，传统重采样更接近像素保真。页面把这些差异放在用户真正做决定的位置。</p>
+          </div>
+          <div class="trust-list">
+            <div><span class="trust-icon" aria-hidden="true">↗</span><span data-i18n="trust.item1">连续处理不会把旧结果继续导出</span></div>
+            <div><span class="trust-icon" aria-hidden="true">◌</span><span data-i18n="trust.item2">输入与画布有明确的浏览器安全上限</span></div>
+            <div><span class="trust-icon" aria-hidden="true">⌁</span><span data-i18n="trust.item3">首次使用不是完全离线，网络边界公开说明</span></div>
+          </div>
+        </section>
+
+        <section class="closing-cta">
+          <p class="eyebrow" data-i18n="cta.eyebrow">OPEN SOURCE, LOCAL BY DEFAULT</p>
+          <h2><span data-i18n="cta.titleLead">从一张图开始，</span> <span class="gradient-text" data-i18n="cta.titleAccent">把结果看明白。</span></h2>
+          <p data-i18n="cta.body">试用公开或合成图片，欢迎把浏览器、图像类型和结果反馈带回项目。</p>
+          <a class="button button-primary" href="../" data-i18n="cta.button">进入 InfinityScale <span aria-hidden="true">↗</span></a>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>© 2026 InfinityScale contributors</span>
+        <span data-i18n="footer.note">MIT License · 图片在浏览器内处理</span>
+      </footer>
+    </div>
+    <script src="./script.js" defer></script>
+  </body>
+</html>

@@ -7,7 +7,7 @@ InfinityScale is a local-first browser workbench for image upscaling, vector tra
 
 **Live demo:** https://github37525.github.io/infinityscale/
 
-**Project links:** [Roadmap](ROADMAP.md) · [Issues](https://github.com/Github37525/infinityscale/issues) · [Discussions](https://github.com/Github37525/infinityscale/discussions)
+**Project links:** [多语言介绍页 / Language landing page](https://github37525.github.io/infinityscale/intro/) · [Roadmap](ROADMAP.md) · [Issues](https://github.com/Github37525/infinityscale/issues) · [Discussions](https://github.com/Github37525/infinityscale/discussions)
 
 ![InfinityScale workspace](docs/screenshot.png)
 
