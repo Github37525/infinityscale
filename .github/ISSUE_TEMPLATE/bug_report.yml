@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible processing, preview, or export problem.
+title: "[Bug]: "
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Do not upload private images. Prefer a minimal synthetic or public-domain reproduction.
+  - type: input
+    id: version
+    attributes:
+      label: InfinityScale version or commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140 on Windows 11
+    validations:
+      required: true
+  - type: dropdown
+    id: algorithm
+    attributes:
+      label: Algorithm
+      options:
+        - VTracer SVG
+        - ESRGAN Thick 2x
+        - ESRGAN Thick 4x
+        - Pica MKS2013
+        - Upload / preview / export only
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized console output
+      render: shell
+

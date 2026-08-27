@@ -1,0 +1,21 @@
+{
+  "name": "InfinityScale 本地图像放大与矢量追踪",
+  "short_name": "InfinityScale",
+  "description": "在浏览器中进行图像重采样、AI 超分、矢量追踪与印刷尺寸规划",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

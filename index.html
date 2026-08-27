@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfinityScale - 本地图像放大与矢量追踪</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=9"><link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#07111f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+    <header class="app-header">
+        <a class="brand" href="#" aria-label="InfinityScale 首页"><span class="brand-mark material-symbols-rounded" aria-hidden="true">zoom_out_map</span><span><strong>InfinityScale</strong><small>本地图像放大工作台</small></span></a>
+        <div class="header-status"><span class="privacy-chip"><span class="status-dot"></span>图像仅在此设备处理</span><button class="btn-ghost" id="btn-install-pwa" style="display:none"><span class="material-symbols-rounded">install_desktop</span>安装应用</button><button class="btn-ghost" id="btn-reset" style="display:none"><span class="material-symbols-rounded">restart_alt</span>重新开始</button></div>
+    </header>
+
+    <main class="app-shell">
+        <aside class="control-rail" aria-label="上传和处理方式">
+            <section class="rail-section upload-section">
+                <div class="section-heading"><span class="step-index">1</span><div><h2>上传图像</h2><p>PNG、JPG、WEBP · 最大 50 MB</p></div></div>
+                <div class="dropzone" id="dropzone"><span class="material-symbols-rounded drop-icon">add_photo_alternate</span><strong>拖放图片到这里</strong><span>或粘贴剪贴板截图</span><button class="dropzone-btn" type="button">选择本地文件</button><input type="file" id="file-input" hidden accept="image/png,image/jpeg,image/webp,image/*"></div>
+                <div class="file-card" id="file-card" hidden><span class="material-symbols-rounded">image</span><div><strong id="file-name-display">—</strong><span id="file-meta-display">—</span></div><span class="file-ready material-symbols-rounded">check_circle</span></div>
+            </section>
+
+            <section class="rail-section recommendation-section" id="recommendation-card" aria-live="polite">
+                <div class="section-heading compact"><span class="step-index">2</span><div><h2>内容分析推荐</h2><p>根据颜色、边缘和尺寸判断</p></div></div>
+                <div class="recommendation-body"><span class="recommendation-kicker" id="recommendation-kicker">等待图片</span><strong id="recommendation-title">上传后给出处理建议</strong><p id="recommendation-reason">推荐只影响默认选择，你随时可以改用其他方法。</p></div>
+            </section>
+
+            <section class="rail-section algorithm-section">
+                <div class="section-label"><span>处理方式</span><small>可手动覆盖推荐</small></div>
+                <div class="algo-switcher">
+                    <button class="algo-btn active" id="algo-svg" data-algo="svg" type="button"><span class="material-symbols-rounded algo-icon">gesture</span><span><strong>SVG 矢量追踪</strong><small>文字、徽标、线稿</small></span><span class="algo-state">矢量</span></button>
+                    <button class="algo-btn" id="algo-ai" data-algo="ai" type="button"><span class="material-symbols-rounded algo-icon">auto_awesome</span><span><strong>AI 图像超分</strong><small>照片、纹理、低清素材</small></span><span class="algo-state">2× / 4×</span></button>
+                    <button class="algo-btn" id="algo-lanczos" data-algo="lanczos" type="button"><span class="material-symbols-rounded algo-icon">tune</span><span><strong>Pica 忠实重采样</strong><small>渐变、插画、快速放大</small></span><span class="algo-state">1.5×–8×</span></button>
+                </div>
+            </section>
+
+            <details class="advanced-settings">
+                <summary><span><span class="material-symbols-rounded">settings</span>高级参数</span><small>按所选方法调整</small></summary>
+                <div id="params-container">
+                    <div class="panel-card" id="panel-svg">
+                        <div class="form-group"><label for="svg-preset">图像类型预设</label><select id="svg-preset"><option value="typography" selected>精细文字 / 艺术字</option><option value="logo">彩色徽标 / 图标</option><option value="lineart">黑白线条 / 签名</option><option value="cartoon">插画卡通</option><option value="posterized">彩色海报</option><option value="photo">写实照片（实验性）</option></select></div>
+                        <label class="switch-label"><span>二值化降噪</span><span class="switch-wrapper"><input type="checkbox" id="svg-binarize" checked><span class="switch-slider"></span></span></label>
+                        <div class="form-group" id="group-svg-threshold"><label for="svg-threshold">二值化阈值 <span id="val-svg-threshold">128</span></label><input type="range" id="svg-threshold" min="50" max="220" value="128"></div>
+                        <div class="form-group" id="group-svg-colors"><label for="svg-colors">最大颜色数 <span id="val-svg-colors">16</span></label><input type="range" id="svg-colors" min="2" max="64" value="16"></div>
+                        <div class="form-group"><label for="svg-noise">降噪阈值 <span id="val-svg-noise">8</span></label><input type="range" id="svg-noise" min="2" max="30" value="8"></div>
+                        <div class="form-group"><label for="svg-detail">曲线契合度 <span id="val-svg-detail">1.0</span></label><input type="range" id="svg-detail" min="0.1" max="4" step="0.1" value="1.0"></div>
+                    </div>
+                    <div class="panel-card" id="panel-ai" style="display:none"><div class="form-group"><label>放大倍数</label><div class="select-btn-group" id="ai-scale-group"><button class="select-btn active" data-scale="2" type="button">2×</button><button class="select-btn" data-scale="4" type="button">4×</button><button class="select-btn" data-scale="custom" type="button" disabled>自定义</button></div></div><div class="form-group"><label for="ai-patch">推理分块</label><select id="ai-patch"><option value="64">64 × 64（安全）</option><option value="128" selected>128 × 128（推荐）</option><option value="256">256 × 256（高性能设备）</option></select></div></div>
+                    <div class="panel-card" id="panel-lanczos" style="display:none"><div class="form-group"><label for="lanczos-scale">放大倍数 <span id="val-lanczos-scale">4.0X</span></label><input type="range" id="lanczos-scale" min="1.5" max="8" step="0.5" value="4"></div><div class="form-group"><label for="lanczos-smooth">双边降噪 <span id="val-lanczos-smooth">0</span></label><input type="range" id="lanczos-smooth" min="0" max="8" step="1" value="0"></div><div class="form-group"><label for="lanczos-color-sig">边缘色差阈值 <span id="val-lanczos-color-sig">30</span></label><input type="range" id="lanczos-color-sig" min="10" max="80" step="5" value="30"></div><div class="form-group"><label for="lanczos-sharpen">额外锐化 <span id="val-lanczos-sharpen">0%</span></label><input type="range" id="lanczos-sharpen" min="0" max="100" step="5" value="0"></div></div>
+                    <div class="panel-card" id="panel-clarity"><label class="switch-label"><span>清晰度后处理</span><span class="switch-wrapper"><input type="checkbox" id="clarity-enable"><span class="switch-slider"></span></span></label><div id="clarity-controls" class="muted-controls"><div class="form-group"><label for="clarity-denoise">降噪 <span id="val-clarity-denoise">20</span></label><input type="range" id="clarity-denoise" min="0" max="100" value="20"></div><div class="form-group"><label for="clarity-deblur">边缘锐化 <span id="val-clarity-deblur">30</span></label><input type="range" id="clarity-deblur" min="0" max="100" value="30"></div><div class="form-group"><label for="clarity-contrast">局部对比 <span id="val-clarity-contrast">15</span></label><input type="range" id="clarity-contrast" min="0" max="100" value="15"></div></div></div>
+                </div>
+            </details>
+        </aside>
+
+        <section class="workspace" aria-label="图像预览">
+            <div class="workspace-header"><div><span class="eyebrow">当前图像</span><h1 id="workspace-file-name">等待上传</h1></div><button class="btn-ghost compact-button" id="btn-zoom-fit" type="button"><span class="material-symbols-rounded">fit_screen</span>适应窗口</button></div>
+            <div class="hero-stage" id="hero-stage"><div class="hero-empty" id="hero-empty"><span class="material-symbols-rounded">image_search</span><strong>上传一张图像开始</strong><p>系统会先分析内容，再推荐更合适的处理方法。</p></div><img id="hero-image" alt="原始图像预览" hidden><div class="crop-box" id="crop-box" hidden><span>取样区域</span></div><div class="hero-meta" id="hero-meta" hidden><span id="hero-dimensions">—</span><span>拖动方框选择局部</span></div></div>
+            <section class="local-preview-section">
+                <div class="preview-heading"><div><span class="step-index">3</span><div><h2>局部预览</h2><p>按原始像素观察细节，不被整图缩放误导</p></div></div><span class="zoom-chip">100%</span></div>
+                <div class="local-preview-grid" id="local-preview-grid"><figure><figcaption><span>原图</span><small id="local-before-label">等待上传</small></figcaption><div class="local-canvas-shell"><canvas id="local-before-canvas" width="420" height="210"></canvas><span class="canvas-placeholder" id="local-before-placeholder">上传后显示取样区域</span></div></figure><figure><figcaption><span>处理后</span><small id="local-after-label">等待处理</small></figcaption><div class="local-canvas-shell"><canvas id="local-after-canvas" width="420" height="210"></canvas><span class="canvas-placeholder" id="local-after-placeholder">完成处理后显示结果</span></div></figure></div>
+            </section>
+            <div class="render-sink" aria-hidden="true"><div class="compare-container" id="compare-container"><div class="compare-img img-before" id="compare-img-before"></div><div class="compare-img img-after" id="compare-img-after"></div><div class="slider-handle" id="slider-handle"></div><div id="badge-after-text">等待处理</div></div></div>
+            <div class="loading-overlay" id="loading-overlay"><div class="loader"></div><div class="loading-text" id="loading-text">正在准备处理...</div><div class="loading-progress-container" id="progress-container"><div class="loading-progress-bar" id="loading-progress-bar"></div></div></div>
+        </section>
+
+        <aside class="output-rail" id="bottom-bar" aria-label="输出设置" style="opacity:.5;pointer-events:none">
+            <div class="section-heading"><span class="step-index">4</span><div><h2>输出与导出</h2><p>确认尺寸后再开始处理</p></div></div>
+            <section class="output-card output-controls-card">
+                <span class="output-label">输出设置</span>
+                <div class="output-control"><label for="output-scale-select">放大倍率</label><select id="output-scale-select"><option value="auto">矢量 / 自动</option><option value="1.5">150%</option><option value="2">200%</option><option value="3">300%</option><option value="4" selected>400%</option><option value="6">600%</option><option value="8">800%</option></select></div>
+                <div class="linked-dimensions"><label>预计像素尺寸</label><div><span id="output-width-value">—</span><span class="material-symbols-rounded">link</span><span id="output-height-value">—</span></div></div>
+                <div class="output-control"><label for="output-dpi-select">目标 DPI</label><select id="output-dpi-select"><option value="72">72（屏幕）</option><option value="150">150（海报）</option><option value="300" selected>300（印刷推荐）</option><option value="600">600（艺术微喷）</option></select></div>
+            </section>
+            <section class="output-card"><span class="output-label">尺寸预估</span><div class="dimension-row"><div><small>原始尺寸</small><strong id="stat-orig-dim">0 x 0</strong></div><span class="material-symbols-rounded">arrow_forward</span><div><small>处理后</small><strong id="stat-proc-dim">--</strong></div></div><div class="output-subrow"><span>放大与物理尺寸</span><strong id="stat-proc-physical">--</strong><span id="stat-arrow-indicator" hidden>→</span></div></section>
+            <section class="output-card" id="stat-dpi-block"><span class="output-label">印刷检查</span><strong class="quality-value" id="stat-print-quality">等待处理结果</strong><button class="inline-action" id="btn-print-calc" type="button"><span class="material-symbols-rounded">calculate</span>设置页面尺寸与 DPI</button></section>
+            <section class="output-card format-card"><span class="output-label">可导出格式</span><div class="format-list"><span>PNG</span><span id="format-svg-chip">SVG（仅矢量结果）</span><span>PDF</span></div><p id="output-estimate">处理完成后可导出。实际文件大小取决于图像内容。</p></section>
+            <button class="btn-process" id="btn-process" type="button"><span class="material-symbols-rounded">bolt</span>开始处理</button>
+            <div class="export-wrap"><button class="btn-export" id="btn-export-dropdown" type="button" disabled><span class="material-symbols-rounded">download</span>导出结果<span class="material-symbols-rounded">expand_more</span></button><div id="export-menu" class="export-menu"><button class="export-opt-btn" id="opt-export-png" type="button">高清 PNG<span>通用位图</span></button><button class="export-opt-btn" id="opt-export-svg" type="button">矢量 SVG<span>仅矢量追踪</span></button><button class="export-opt-btn" id="opt-export-pdf" type="button">印刷版 PDF<span>按页面规格</span></button></div></div>
+            <p class="privacy-note"><span class="material-symbols-rounded">lock</span>模型和算法在浏览器中运行；图像不会上传到服务器。</p>
+        </aside>
+    </main>
+
+    <div class="modal-overlay" id="modal-overlay"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div class="modal-header"><span class="modal-title" id="print-modal-title">印刷规格与尺寸换算</span><button class="modal-close" id="modal-close" type="button" aria-label="关闭">&times;</button></div><div class="modal-body"><p>输入页面尺寸和目标 DPI。若图像比例不同，PDF 会留白，不会拉伸。</p><div class="calc-grid"><div class="form-group"><label for="calc-width">页面宽度（mm）</label><input type="number" id="calc-width" value="297" min="10" max="5000"></div><div class="form-group"><label for="calc-height">页面高度（mm）</label><input type="number" id="calc-height" value="210" min="10" max="5000"></div><div class="form-group full-span"><label for="calc-dpi">目标精度</label><select id="calc-dpi"><option value="300" selected>300 DPI（画册 / 书籍）</option><option value="150">150 DPI（海报）</option><option value="72">72 DPI（屏幕）</option><option value="600">600 DPI（艺术微喷）</option></select></div><div class="calc-output-box full-span"><div><span>所需像素</span><strong id="calc-result-pixels">3508 x 2480 像素</strong></div><div><span>规模</span><strong id="calc-result-desc">约 8.7 百万像素</strong></div></div></div><button class="btn-process" id="btn-apply-calc-scale" type="button">应用到放大参数</button></div></div></div>
+    <div class="toast" id="toast" role="status"><svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span id="toast-message">操作成功</span></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x2/index.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x4/index.min.js"></script><script src="https://cdn.jsdelivr.net/npm/upscaler@1.0.0-beta.19/dist/browser/umd/upscaler.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pica@10.0.3/dist/pica.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="app.js?v=9"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Local review artifacts
+audit-screenshots/
+design-qa.md
+PROJECT_AUDIT_*.md
+OPENAI_OSS_APPLICATION_DRAFT.md
+
+# Local launcher backup
+*.legacy-gbk.bat
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local servers and logs
+*.log
+.cache/
+node_modules/
+
